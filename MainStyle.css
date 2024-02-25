@@ -19,7 +19,7 @@ body {
     transition-duration: 0.4s;
     cursor: pointer;
   }
-  .button1:hover {
+  .button:hover {
     background-color: black;
     color: white;
   }
