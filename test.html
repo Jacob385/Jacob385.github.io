@@ -7,7 +7,7 @@
  
   <p>Spell Something backwards!</p></p>
   <label for="inBox">Input:</label><br>
-  <input type="text" id="inBox" name="fname" value="print( &quotHello World &quot)" autofocus><br>
+  <input type="text" id="inBox" name="fname" value="print(&quot;Hello World&quot;)" autofocus><br>
   
   <label for="outBox">output:</label><br>
   <input type="text" id="outBox" name="lname" readonly><br><br>
@@ -17,12 +17,12 @@
   
   <script>
     function reverse(){
-      const in = document.getElementById("inBox").innerHTML
+      const input = document.getElementById("inBox").value
       let out =""
-      for(let x=in.length-1; x>=0 ;x--){
-        out+=in.substring(x,x+1);
+      for(let x=input.length-1; x>=0 ;x--){
+        out+=input.substring(x,x+1);
       }
-      document.getElementById("outBox").innerHTML=out
+      document.getElementById("outBox").value=out
     }
   </script>
 
