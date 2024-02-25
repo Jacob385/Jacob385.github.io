@@ -3,11 +3,30 @@
 <body>
   <h1>YOUR NAME</h1>
   <p>Welcome to my website!</p>
+
+  <form action="/action_page.php">
+    <p>Spell Something backwards!</p></p>
+    <label for="inBox">Input:</label><br>
+    <input type="text" id="inBox" name="fname" value="print(&quotHello World&quot)" autofocus><br>
+  
+    <label for="outBox">output:</label><br>
+    <input type="text" id="outBox" name="lname" readonly><br><br>
+  
+    <input type="submit" value="Submit">
+  </form> 
+  
   <script>
-for (let i = 0; i < 10; i++)
-    print(i);
-    
+    function reverse(){
+      const in = document.getElementById("inBox").innerHTML
+      let out =""
+      for(let x=in.length-1; x>=0 ;x--){
+        out+=in.substring(x,x+1);
+      }
+      document.getElementById("outBox").innerHTML=out
+    }
   </script>
+
+  
 </body>
 
 </html>
