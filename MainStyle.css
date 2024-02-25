@@ -19,6 +19,10 @@ body {
     transition-duration: 0.4s;
     cursor: pointer;
   }
+  .button1:hover {
+    background-color: black;
+    color: white;
+  }
   
   .button1 {
     background-color: white; 
