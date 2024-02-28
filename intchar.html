@@ -6,19 +6,20 @@
   </head>
 <body>
   <button class="button homeButton" onclick="goToHome()"><i class="fa fa-home"></i> Home</button>
-  <h1>YOUR NAME</h1>
-  <p>Welcome to my website!</p>
-
- 
-  <p>Enter an int or char to convert it!</p></p>
-  <label for="inBox">Input:</label><br>
-  <input class="textbox" type="text" id="inBox" value="" autofocus><br>
   
-  <label for="outBox">output:</label><br>
-  <input class="textbox" type="text" id="outBox"  readonly><br><br>
+  <div class="center">
+   <!--<h1>YOUR NAME</h1>-->
+   <p></p>
+   
+   <p>Enter an int or char to convert it!</p></p>
+   <label for="inBox">Input:</label><br>
+   <input class="textbox" type="text" id="inBox" value="" autofocus><br>
+  
+   <label for="outBox">output:</label><br>
+   <input class="textbox" type="text" id="outBox"  readonly><br><br>
     
-  <input type="button" onclick="convert()" value="Submit">
- 
+   <input type="button" onclick="convert()" value="Submit">
+  </div>
   
   <script>
     function convert(){
@@ -26,6 +27,8 @@
       let out =""
       for(let x=0; input.length; x++){
         input[x] = input[x].trim()
+        out += input[0]+"[]\n"
+        /*
         if(isNumber(input[x])){
             out += "'"+String.fromCharCode() +"'\n"
         }else if(input[x].length==1){
@@ -33,7 +36,7 @@
         }
         else{
             out += "Could Not Convert\n"
-        }
+        }*/
 
       }
       document.getElementById("outBox").value=out
