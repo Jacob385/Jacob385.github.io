@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="MainStyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="MainJavascript.js" type="text/javascript"></script>
+  </head>
+<body>
+  <button class="button homeButton" onclick="goToHome()"><i class="fa fa-home"></i> Home</button>
+  <h1>YOUR NAME</h1>
+  <p>Welcome to my website!</p>
+
+ 
+  <p>Enter an int or char to convert it!</p></p>
+  <label for="inBox">Input:</label><br>
+  <input class="textbox" type="text" id="inBox" value="" autofocus><br>
+  
+  <label for="outBox">output:</label><br>
+  <input class="textbox" type="text" id="outBox"  readonly><br><br>
+    
+  <input type="button" onclick="convert()" value="Submit">
+ 
+  
+  <script>
+    function convert(){
+      let input = document.getElementById("inBox").value.split("/[\s,.]+/g")
+      let out =""
+      for(let x=0; input.length; x++){
+        input[x] = input[x].trim()
+        if(isNumber(input[x])){
+            out += "'"+String.fromCharCode() +"'\n"
+        }else if(input[x].length==1){
+            out += input[x].charCodeAt(0) + "\n"
+        }
+        else{
+            out += "Could Not Convert\n"
+        }
+
+      }
+      document.getElementById("outBox").value=out
+    }
+  </script>
+
+  
+</body>
+</html>

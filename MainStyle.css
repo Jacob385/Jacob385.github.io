@@ -5,6 +5,11 @@ body {
     color: navy;
     margin-left: 20px;
   }
+
+  .textbox {
+    width: 320px;
+    height: 50px;
+  }
   
   .button {
     border: black;
