@@ -13,10 +13,10 @@
    
    <p>Enter an int or char to convert it!</p></p>
    <label for="inBox">Input:</label><br>
-   <input class="textbox" type="text" id="inBox" value="" autofocus><br>
+   <textarea class="textbox" id="inBox" value="" autofocus></div>textarea><br>
   
    <label for="outBox">output:</label><br>
-   <input class="textbox" type="text" id="outBox"  readonly><br><br>
+   <textarea class="textbox" id="outBox"  readonly></textarea><br><br>
     
    <input type="button" onclick="convert()" value="Submit">
   </div>
@@ -28,15 +28,15 @@
       let out = ""
       for(let x=0; x<input.length; x++){
         input[x] = input[x].trim()
-        out += "["+input[x]+"] "
+        //out += "["+input[x]+"] "
         
         if(isInteger(input[x])){
-           out += "'"+String.fromCharCode(input[x]) +"'\n"
+          out += "'"+String.fromCharCode(input[x]) +"'\n"
         }else if(input[x].length==1){
-            out += input[x].charCodeAt(x) + "\n"
+          out += input[x].charCodeAt(0) + "\n"
         }
         else{
-           out += "Could Not Convert\n"
+          out += "Could Not Convert\n"
         }
 
       }
