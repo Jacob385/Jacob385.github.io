@@ -12,3 +12,9 @@ function goToReverse(){window.location.href ="https://jacob385.github.io/reverse
 
 //Go to int-char converter page
 function goToIntchar(){window.location.href ="https://jacob385.github.io/intchar"}
+
+
+
+
+//Test is string is an integer
+function isInteger( str ) {return /^-?\d+$/.test( str );}

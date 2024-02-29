@@ -22,18 +22,21 @@
   </div>
   
   <script>
+
     function convert(){
       let input = document.getElementById("inBox").value.split(/[\s,.]+/)
-      let out =""
+      let out = ""
       for(let x=0; x<input.length; x++){
         input[x] = input[x].trim()
-        if(isNumber(input[x])){
-          out += "'"+String.fromCharCode() +"'\n"
+        out += "["+input[x]+"] "
+        
+        if(isInteger(input[x])){
+           out += "'"+String.fromCharCode(input[x]) +"'\n"
         }else if(input[x].length==1){
-          out += input[x].charCodeAt(0) + "\n"
+            out += input[x].charCodeAt(x) + "\n"
         }
         else{
-          out += "Could Not Convert\n"
+           out += "Could Not Convert\n"
         }
 
       }
