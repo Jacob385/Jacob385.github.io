@@ -23,20 +23,18 @@
   
   <script>
     function convert(){
-      let input = document.getElementById("inBox").value.split("/[\s,.]+/g")
+      let input = document.getElementById("inBox").value.split(/[\s,.]+/)
       let out =""
-      for(let x=0; input.length; x++){
+      for(let x=0; x<input.length; x++){
         input[x] = input[x].trim()
-        out += input[x]+"[]\n"
-        /*
         if(isNumber(input[x])){
-            out += "'"+String.fromCharCode() +"'\n"
+          out += "'"+String.fromCharCode() +"'\n"
         }else if(input[x].length==1){
-            out += input[x].charCodeAt(0) + "\n"
+          out += input[x].charCodeAt(0) + "\n"
         }
         else{
-            out += "Could Not Convert\n"
-        }*/
+          out += "Could Not Convert\n"
+        }
 
       }
       document.getElementById("outBox").value=out
