@@ -6,19 +6,20 @@
   </head>
 <body>
   <button class="button homeButton" onclick="goToHome()"><i class="fa fa-home"></i> Home</button>
-  <h1>YOUR NAME</h1>
-  <p>Welcome to my website!</p>
+  <div class="center">
+    <h1>Reverse</h1>
+    <p></p>
 
  
-  <p>Spell Something backwards!</p></p>
-  <label for="inBox">Input:</label><br>
-  <textarea class="textbox" id="inBox" autofocus></textarea><br>
+    <p>Spell Something backwards!</p></p>
+    <label for="inBox">Input:</label><br>
+    <textarea class="textbox center" id="inBox" autofocus></textarea><br>
   
-  <label for="outBox">output:</label><br>
-  <textarea class="textbox" id="outBox"  readonly></textarea><br><br>
+    <label for="outBox">output:</label><br>
+    <textarea class="textbox center" id="outBox"  readonly></textarea><br><br>
     
-  <button class="button" onclick="reverse()">Submit</button>
-  
+    <button class="button" onclick="reverse()">Submit</button>
+  </div>
   <script>
     function reverse(){
       const input = document.getElementById("inBox").value
