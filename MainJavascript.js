@@ -1,7 +1,7 @@
 //Go to Home page
 function goToHome(){window.location.href ="https://jacob385.github.io"}
 
-//Go to Github
+//Go to GitHub
 function goToGithub(){window.location.href ="https://github.com/Jacob385"}
 
 //Go to tools page
@@ -13,6 +13,8 @@ function goToReverse(){window.location.href ="https://jacob385.github.io/reverse
 //Go to int-char converter page
 function goToIntchar(){window.location.href ="https://jacob385.github.io/intchar"}
 
+//Go to java Packer page
+function goJavaPacker(){window.location.href ="https://jacob385.github.io/javaPacker"}
 
 
 
