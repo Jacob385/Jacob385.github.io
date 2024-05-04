@@ -14,7 +14,7 @@ function goToReverse(){window.location.href ="https://jacob385.github.io/reverse
 function goToIntchar(){window.location.href ="https://jacob385.github.io/intchar"}
 
 //Go to java Packer page
-function goJavaPacker(){window.location.href ="https://jacob385.github.io/javaPacker"}
+function gotoJavaPacker(){window.location.href ="https://jacob385.github.io/javaPacker"}
 
 
 
