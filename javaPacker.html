@@ -1,72 +1,126 @@
 <html>
-  <head>
-    <link rel="stylesheet" href="MainStyle.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="MainJavascript.js" type="text/javascript"></script>
-  </head>
+
+<head>
+  <link rel="stylesheet" href="MainStyle.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="MainJavascript.js" type="text/javascript"></script>
+</head>
+
 <body>
   <!-- this adds home button -->
   <!--
   <button class="button homeButton" onclick="goToHome()"><i class="fa fa-home"></i> Home</button>
   -->
   <div class="center">
-   <h1>Java Packer</h1>
-   <p></p>
-   
-   <p>Enter Java program or a string convert it!</p></p>
-   <label for="inBox">Input:</label><br>
-   <textarea class="textbox center" id="inBox" rows="12" cols="60" value="" autofocus></textarea><br>
-  
-   <label for="outBox">Output:</label><br>
-   <textarea class="textbox center" id="outBox" rows="12" cols="60" readonly></textarea><br><br>
-    
-   <button class="button" onclick="convert()">Submit</button>
+    <h1>Java Packer</h1>
+    <p></p>
+
+    <p>Enter Java program or a string convert it!</p>
+    </p>
+    <div id="input">
+
+      <fieldset id="mode_selector">
+        <legend>Mode</legend>
+        <div>
+          <input name="mode_selector" type="radio" id="hardCodeString2:1" value="1" checked="">
+          <label for="hardCodeString2:1">HardCodeString 2:1</label>
+        </div>
+        <div>
+          <input name="mode_selector" type="radio" id="hardCodeString3:1" value="2">
+          <label for="hardCodeString3:1">HardCodeString 3:1 (no newline chars)</label>
+        </div>
+        <div>
+          <input name="mode_selector" type="radio" id="CodePacker" value="3">
+          <label for="CodePacker">CodePacker</label>
+        </div>
+        <div>
+          <input name="mode_selector" type="radio" id="CodePackerArgs" value="4">
+          <label for="CodePackerArgs">CodePacker Args</label>
+        </div>
+      </fieldset>
+
+
+
+      <label for="inBox">Input:</label><br>
+      <textarea class="textbox center" id="inBox" rows="12" cols="60" value="" autofocus></textarea><br>
+    </div>
+
+    <div id="output">
+      <label for="outBox">Output:</label><br>
+      <textarea class="textbox center" id="outBox" rows="12" cols="60" readonly></textarea><br><br>
+    </div>
+    <button class="button" onclick="convert()">Submit</button>
   </div>
-  
+
   <script>
 
-    function convert(){
-        let input = document.getElementById("inBox").value
-        let tempString = input.trim();
-       let length = tempString.length+1;
-        // keeps length odd
-        if (tempString.length % 2 > 0){
-            tempString += " ";
-        }
-        tempString += " ";
-/*
-public class a{public static void main(String[] args){System.out.println("Hello World");}}
-*/
+    function convert() {
+      let mode = document.querySelector('input[name="mode_selector"]:checked').value
 
-        // Convert string to UTF-8 bytes
-        const encoder = new TextEncoder();
-        const utf8Bytes = encoder.encode(tempString);
-
-        // Convert UTF-8 bytes back to string
-        const decoder = new TextDecoder('utf-16be');
-        const convertedString = decoder.decode(utf8Bytes);
-
-        
-
-
-
-
-
-      //>>>>>>>>>>>>>>>>
-     // out+="\na\n"+thing;
-      let out = "import java.nio.file.*;import java.nio.charset.*;interface ${static void main(String[]$)throws Exception{var s=\""
-      out+=convertedString
-      out+="\";"
-      out+="Files.writeString(Path.of(\".java\"),\"\");byte[]n=s.getBytes(StandardCharsets.UTF_16);for(int i=1;i++<"
-      out+=length
-      out+=";)Files.writeString(Path.of(\".java\"),\"\"+(char)n[i],StandardOpenOption.APPEND);"
-      out+="Runtime r=Runtime.getRuntime();r.exec(\"/opt/jdk/bin/javac .java\");r.exec(\"/opt/jdk/bin/java .java\").inputReader().lines().forEach(System.out::println);}}"
-      //<<<<<<<<<<<<<<<<<,
-      
-      document.getElementById("outBox").value=out
+      if (mode === "1") StringPacker21()
+      else if (mode === "2") StringPacker31()
+      else if (mode === "3") CodePacker()
+      else if (mode === "4") CodePackerArgs()
+      else document.getElementById("outBox").value = "Mode not Found"
     }
+
+    function StringPacker21() {
+
+      let input = document.getElementById("inBox").value
+
+
+      let length = input.length + 2;
+      if (length % 2 > 0)
+        input += " ";
+      let convertedString = packString21(input)
+      document.getElementById("outBox").value =
+        "import java.nio.charset.*;"
+        + "interface M{static void main(String[]a){"
+        + "byte[]n=\"" + convertedString + "\".getBytes(StandardCharsets.UTF_16);"
+        + "for(int i=1;i++<" + length + ";)System.out.print((char)n[i]);}}"
+    }
+
+
+    function StringPacker31() { document.getElementById("outBox").value = "Mode not ready" }
+    function CodePacker() {
+      let input = document.getElementById("inBox").value
+      let tempString = input.trim();
+      let length = tempString.length + 1;
+      // keeps length odd
+      if (tempString.length % 2 > 0) {
+        tempString += " ";
+      }
+      tempString += " ";
+
+      //encode string
+      const convertedString = packString21(tempString);
+     
+      let out = "import java.nio.file.*;import java.nio.charset.*;interface ${static void main(String[]$)throws Exception{var s=\""
+      out += convertedString
+      out += "\";"
+      out += "Files.writeString(Path.of(\".java\"),\"\");byte[]n=s.getBytes(StandardCharsets.UTF_16);for(int i=1;i++<"
+      out += length
+      out += ";)Files.writeString(Path.of(\".java\"),\"\"+(char)n[i],StandardOpenOption.APPEND);"
+      out += "Runtime r=Runtime.getRuntime();r.exec(\"/opt/jdk/bin/javac .java\");r.exec(\"/opt/jdk/bin/java .java\").inputReader().lines().forEach(System.out::println);}}"
+
+
+      document.getElementById("outBox").value = out
+    }
+    function CodePackerArgs() { document.getElementById("outBox").value = "Mode not ready" }
+
+    function packString21(string) {
+      // Convert string to UTF-8 bytes
+      const encoder = new TextEncoder();
+      const utf8Bytes = encoder.encode(string);
+
+      // Convert UTF-8 bytes back to string
+      const decoder = new TextDecoder('utf-16be');
+      return decoder.decode(utf8Bytes);
+    }
+
   </script>
 
-  
+
 </body>
+
 </html>
