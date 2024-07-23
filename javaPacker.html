@@ -17,39 +17,42 @@
 
     <p>Enter Java program or a string convert it!</p>
     </p>
-    <div id="input">
+    
 
-      <fieldset id="mode_selector">
-        <legend>Mode</legend>
-        <div>
-          <input name="mode_selector" type="radio" id="hardCodeString2:1" value="1" checked="">
-          <label for="hardCodeString2:1">HardCodeString 2:1</label>
-        </div>
-        <div>
-          <input name="mode_selector" type="radio" id="hardCodeString3:1" value="2">
-          <label for="hardCodeString3:1">HardCodeString 3:1 (no newline chars)</label>
-        </div>
-        <div>
-          <input name="mode_selector" type="radio" id="CodePacker" value="3">
-          <label for="CodePacker">CodePacker</label>
-        </div>
-        <div>
-          <input name="mode_selector" type="radio" id="CodePackerArgs" value="4">
-          <label for="CodePackerArgs">CodePacker Args</label>
-        </div>
-      </fieldset>
+    <fieldset id="mode_selector">
+      <legend>Mode</legend>
+      <div>
+        <input name="mode_selector" type="radio" id="hardCodeString2:1" value="1" checked="">
+        <label for="hardCodeString2:1">HardCodeString 2:1</label>
+      </div>
+      <div>
+        <input name="mode_selector" type="radio" id="hardCodeString3:1" value="2">
+        <label for="hardCodeString3:1">HardCodeString 3:1 (no newline chars)</label>
+      </div>
+      <div>
+        <input name="mode_selector" type="radio" id="CodePacker" value="3">
+        <label for="CodePacker">CodePacker</label>
+      </div>
+      <div>
+        <input name="mode_selector" type="radio" id="CodePackerArgs" value="4">
+        <label for="CodePackerArgs">CodePacker Args</label>
+      </div>
+    </fieldset>
 
 
-
+    <div>
       <label for="inBox">Input:</label><br>
       <textarea class="textbox center" id="inBox" rows="12" cols="60" value="" autofocus></textarea><br>
-    </div>
+     
 
-    <div id="output">
-      <label for="outBox">Output:</label><br>
-      <textarea class="textbox center" id="outBox" rows="12" cols="60" readonly></textarea><br><br>
+      <div id="output">
+        <label for="outBox">Output:</label><br>
+        <textarea class="textbox center" id="outBox" rows="12" cols="60" readonly></textarea><br><br>
+      </div>
     </div>
     <button class="button" onclick="convert()">Submit</button>
+    <!-- The button used to copy the text -->
+    <button class="button" onclick="copyText('outBox')">Copy text</button>
   </div>
 
   <script>
@@ -113,7 +116,30 @@
       document.getElementById("outBox").value = out
     }
 
-    function CodePackerArgs() { document.getElementById("outBox").value = "Mode not ready" }
+    function CodePackerArgs() {
+      let input = document.getElementById("inBox").value
+      let tempString = input.trim();
+      let length = tempString.length + 1;
+      // keeps length odd
+      if (tempString.length % 2 > 0) {
+        tempString += " ";
+      }
+      tempString += " ";
+
+      //encode string
+      const convertedString = packString21(tempString);
+
+      let out = "import java.nio.file.*;interface ${static void main(String[]$)throws Exception{var s=\""
+      out += convertedString
+      out += "\";"
+      out += "Files.writeString(Path.of(\".java\"),\"\");byte[]n=s.getBytes(java.nio.charset.StandardCharsets.UTF_16);for(int i=1;i++<"
+      out += length
+      out += ";)Files.writeString(Path.of(\".java\"),\"\"+(char)n[i],StandardOpenOption.APPEND);"
+      out += "Runtime r=Runtime.getRuntime();r.exec(\"/opt/jdk/bin/javac .java\");r.exec(\"/opt/jdk/bin/java .java \"+String.join(\" \",$)).inputReader().lines().forEach(System.out::println);}}"
+
+
+      document.getElementById("outBox").value = out
+    }
 
     function packString21(string) {
       // Convert string to UTF-8 bytes
