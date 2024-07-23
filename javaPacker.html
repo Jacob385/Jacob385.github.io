@@ -54,6 +54,7 @@
 
   <script>
 
+
     function convert() {
       let mode = document.querySelector('input[name="mode_selector"]:checked').value
 
@@ -80,7 +81,16 @@
     }
 
 
-    function StringPacker31() { document.getElementById("outBox").value = packString31(document.getElementById("inBox").value) }
+    function StringPacker31() {
+      document.getElementById("outBox").value =
+        "interface M{static void main(String[]a){var S=\"" +
+        packString31(document.getElementById("inBox").value)
+        ////
+        //+"\";for(int i=0,b;i<S.length();i+=2)for(b=100;b++<103;)System.out.print((char)(S.codePointAt(i)%b+32));}}";
+        + "\";for(int c:S.codePoints().toArray())for(int b=100;b++<103;)System.out.print((char)(c%b+32));}}";
+      ///
+
+    }
 
     function CodePacker() {
       let input = document.getElementById("inBox").value
@@ -120,6 +130,9 @@
     }
 
     function packString31(string) {
+      //link to help unpack 
+      //https://stackoverflow.com/questions/1527856/how-can-i-iterate-through-the-unicode-codepoints-of-a-java-string
+
 
       function crt(a, n) {
         let s = 0, p = 1;
