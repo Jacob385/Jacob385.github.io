@@ -8,16 +8,17 @@ function goToGithub(){window.location.href ="https://github.com/Jacob385"}
 function goToTools(){window.location.href ="https://jacob385.github.io/tools"}
 
 //Go to reverse text page
-function goToReverse(){window.location.href ="https://jacob385.github.io/reverse"}
+function goToReverse(){window.location.href ="https://jacob385.github.io/Tools/reverse"}
 
 //Go to int-char converter page
-function goToIntchar(){window.location.href ="https://jacob385.github.io/intchar"}
-
-//Go to java Packer page
-function goToJavaPacker(){window.location.href ="https://jacob385.github.io/javaPacker"}
+function goToIntchar(){window.location.href ="https://jacob385.github.io/Tools/intchar"}
 
 //Go to NewlineReplace page
-function goToNewlineReplace(){window.location.href ="https://jacob385.github.io/newlineReplace"}
+function goToNewlineReplace(){window.location.href ="https://jacob385.github.io/Tools/newlineReplace"}
+
+//Go to java Packer page
+function goToJavaPacker(){window.location.href ="https://jacob385.github.io/Tools/CodeGolf/javaPacker"}
+
 
 
 //Test is string is an integer
