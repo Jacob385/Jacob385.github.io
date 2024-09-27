@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="../MainStyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="../MainJavascript.js" type="text/javascript"></script>
+  </head>
+<body>
+  <button class="button homeButton" onclick="goToHome()"><i class="fa fa-home"></i> Home</button>
+  
+  <div class="center">
+   <h1>Int-Char Converter</h1>
+   <p></p>
+   
+   <p>Enter an int or char to convert it!</p></p>
+   <label for="inBox">Input:</label><br>
+   <textarea class="textbox center" id="inBox" value="" autofocus></textarea><br>
+  
+   <label for="outBox">Output:</label><br>
+   <textarea class="textbox center" id="outBox"  readonly></textarea><br><br>
+    
+   <button class="button" onclick="convert()">Submit</button>
+  </div>
+  
+  <script>
+
+    function convert(){
+      let input = document.getElementById("inBox").value.split(/[\s,.]+/)
+      let out = ""
+      for(let x=0; x<input.length; x++){
+        input[x] = input[x].trim()
+        //out += "["+input[x]+"] "
+        
+        if(isInteger(input[x])){
+          out += "'"+String.fromCodePoint(input[x]) +"'\n"
+        }else if(input[x].length==1){
+          out += input[x].charCodeAt(0) + "\n"
+        }
+        else{
+          out += "Could Not Convert\n"
+        }
+
+      }
+      document.getElementById("outBox").value=out
+    }
+  </script>
+
+  
+</body>
+</html>

@@ -16,6 +16,8 @@ function goToIntchar(){window.location.href ="https://jacob385.github.io/intchar
 //Go to java Packer page
 function goToJavaPacker(){window.location.href ="https://jacob385.github.io/javaPacker"}
 
+//Go to NewlineReplace page
+function goToNewlineReplace(){window.location.href ="https://jacob385.github.io/newlineReplace"}
 
 
 //Test is string is an integer
