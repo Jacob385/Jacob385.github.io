@@ -1,0 +1,148 @@
+<html></html>
+
+<head>
+  <link rel="stylesheet" href="../../MainStyle.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="../../MainJavascript.js" type="text/javascript"></script>
+  
+  
+  <script src="makeLink.js" type="text/javascript"></script>
+
+  
+  
+
+
+
+</head>
+
+<body>
+  <!-- this adds home button -->
+  <!--
+  <button class="button homeButton" onclick="goToHome()"><i class="fa fa-home"></i> Home</button>
+  -->
+  <div class="center">
+    <h1>Hexogony Packer</h1>
+    <p></p>
+
+    <p>Enter a Hexogony program or a string to convert it!</p>
+    </p>
+    
+
+    <fieldset id="mode_selector">
+      <legend>Mode</legend>
+      <div>
+        <input name="mode_selector" type="radio" id="hardCodeString" value="1" checked="">
+        <label for="hardCodeString">HardCodeString</label>
+      </div>
+     
+      <div>
+        <input name="mode_selector" type="radio" id="CodePacker" value="3">
+        <label for="CodePacker">CodePacker (Not Ready)</label>
+      </div>
+     
+    </fieldset>
+
+
+    <div>
+      <label for="inBox">Input:</label><br>
+      <textarea class="textbox center" id="inBox" rows="12" cols="60" value="" autofocus></textarea><br>
+     
+ <!-- TODO make this read only -->
+      <div id="output">
+        <label for="outBox">Output:</label><br>
+        <textarea class="textbox center" id="outBox" rows="12" cols="60" ></textarea><br><br>
+      </div>
+    </div>
+
+    <button class="button" onclick="convert()">Submit</button>
+
+    <!-- The button used to copy the text -->
+    <button class="button" onclick="copyText('outBox')">Copy text</button>
+
+     <!-- The button used to open a link to Hexagony.net -->
+     <button class="button" onclick="openHexagony()">
+        Run on Hexagony.net</button>
+
+      <script type="text/typescript" src="ToHexogonyButton.ts"></script>
+
+  </div>
+
+  <script>
+
+
+    function convert() {
+      let mode = document.querySelector('input[name="mode_selector"]:checked').value
+
+      if (mode === "1") StringPacker()
+      else if (mode === "2") CodePacker()
+     
+      else document.getElementById("outBox").value = "Mode not Found"
+    }
+
+    function StringPacker(){
+
+
+        document.getElementById("outBox").value ="Thfdsafasfasfet."
+
+    }
+    
+    function CodePacker(){
+
+        document.getElementById("outBox").value ="This option is not ready yet."
+
+        
+    }
+
+    function openHexagony(){
+
+        let input = document.getElementById("inBox").value;
+
+        
+      //  window.location.href ="https://hexagony.net/#lz"+
+      
+      document.getElementById("outBox").value = "abc"
+
+      getLink();
+
+    document.getElementById("inBox").value =7
+      //compressToBase64(input)
+    
+    }
+
+    function compressToBase64(input){
+    
+
+
+
+
+    if (input == null) {
+        return "";
+        }
+
+    document.getElementById("outBox").value = "abc"
+
+   // const res = _compress(input, 6, (a) => "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".charAt(a));
+    const res = _compress(input, 6, (a) => "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".charAt(a));
+
+    document.getElementById("inBox").value =7
+
+
+    // To produce valid Base64
+    switch (res.length % 4) {
+        default: // When could this happen ?
+        case 0:
+            return res;
+        case 1:
+            return res + "===";
+        case 2:
+            return res + "==";
+        case 3:
+            return res + "=";
+    }
+        
+    }
+  </script>
+
+</body>
+
+</html>

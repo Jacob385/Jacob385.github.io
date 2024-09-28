@@ -19,6 +19,8 @@ function goToNewlineReplace(){window.location.href ="https://jacob385.github.io/
 //Go to java Packer page
 function goToJavaPacker(){window.location.href ="https://jacob385.github.io/Tools/CodeGolf/javaPacker"}
 
+//Go to hexagony Packer page
+function goToHexagonyPacker(){window.location.href ="https://jacob385.github.io/Tools/CodeGolf/hexagonyPacker"}
 
 
 //Test is string is an integer
