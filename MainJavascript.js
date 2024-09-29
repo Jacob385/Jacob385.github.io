@@ -20,7 +20,7 @@ function goToNewlineReplace(){window.location.href ="https://jacob385.github.io/
 function goToJavaPacker(){window.location.href ="https://jacob385.github.io/Tools/CodeGolf/javaPacker"}
 
 //Go to hexagony Packer page
-function goToHexagonyPacker(){window.location.href ="https://jacob385.github.io/Tools/CodeGolf/hexagonyPacker"}
+function goToHexagonyPacker(){window.location.href ="https://jacob385.github.io/Tools/CodeGolf/HexagonyPacker"}
 
 
 //Test is string is an integer

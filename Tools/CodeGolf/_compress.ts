@@ -4,8 +4,6 @@
 export type Dictionary = Record<string, number>;
 export type PendingDictionary = Record<string, true>;
 
-function add(a:number,b:number){return a+b}
-
 export function _compress(uncompressed: null, bitsPerChar: number, getCharFromInt: (a: number) => string): "";
 export function _compress(uncompressed: string, bitsPerChar: number, getCharFromInt: (a: number) => string): string;
 export function _compress(

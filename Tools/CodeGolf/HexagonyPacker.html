@@ -5,6 +5,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="../../MainJavascript.js" type="text/javascript"></script>
   
+  <script src="compress.js" type="text/javascript"></script>
+
+
   
   <script src="makeLink.js" type="text/javascript"></script>
 
@@ -36,7 +39,7 @@
       </div>
      
       <div>
-        <input name="mode_selector" type="radio" id="CodePacker" value="3">
+        <input name="mode_selector" type="radio" id="CodePacker" value="2">
         <label for="CodePacker">CodePacker (Not Ready)</label>
       </div>
      
@@ -60,8 +63,7 @@
     <button class="button" onclick="copyText('outBox')">Copy text</button>
 
      <!-- The button used to open a link to Hexagony.net -->
-     <button class="button" onclick="openHexagony()">
-        Run on Hexagony.net</button>
+     <button class="button" onclick="openHexagony()">Run on Hexagony.net</button>
 
       <script type="text/typescript" src="ToHexogonyButton.ts"></script>
 
@@ -87,48 +89,33 @@
     }
     
     function CodePacker(){
-
-        document.getElementById("outBox").value ="This option is not ready yet."
-
-        
+        document.getElementById("outBox").value = document.getElementById("inBox").value
+        alert("This option is not ready yet.") 
     }
 
     function openHexagony(){
 
-        let input = document.getElementById("inBox").value;
-
+      let code = document.getElementById("outBox").value;
+      let input=""
+      let inputmode="raw"
         
-      //  window.location.href ="https://hexagony.net/#lz"+
-      
-      document.getElementById("outBox").value = "abc"
+      let inputString = JSON.stringify({code,input,inputmode})
 
-      getLink();
+      //generate link
+      let link = "https://hexagony.net/#lz" + compressToBase64(inputString)
 
-    document.getElementById("inBox").value =7
-      //compressToBase64(input)
-    
+      //open link in a new tab
+      window.open(link,'_blank' );
     }
 
     function compressToBase64(input){
     
+      if (input == null) {return "";}
 
+      const res = _compress(input, 6, (a) => "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".charAt(a));
 
-
-
-    if (input == null) {
-        return "";
-        }
-
-    document.getElementById("outBox").value = "abc"
-
-   // const res = _compress(input, 6, (a) => "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".charAt(a));
-    const res = _compress(input, 6, (a) => "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".charAt(a));
-
-    document.getElementById("inBox").value =7
-
-
-    // To produce valid Base64
-    switch (res.length % 4) {
+      // To produce valid Base64
+      switch (res.length % 4) {
         default: // When could this happen ?
         case 0:
             return res;
@@ -138,7 +125,7 @@
             return res + "==";
         case 3:
             return res + "=";
-    }
+      }
         
     }
   </script>
