@@ -6,6 +6,7 @@
   <script src="../../MainJavascript.js" type="text/javascript"></script>
   
   <script src="compress.js" type="text/javascript"></script>
+  <script src="HexagonyPacker.js" type="text/javascript"></script>
 
 
   
@@ -82,9 +83,9 @@
     }
 
     function StringPacker(){
-
-
-        document.getElementById("outBox").value ="Thfdsafasfasfet."
+      
+      let code = document.getElementById("inBox").value
+        document.getElementById("outBox").value = pack(code)
 
     }
     
