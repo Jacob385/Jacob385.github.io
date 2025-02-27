@@ -170,12 +170,12 @@ function lineToHex(code){
     outString[length - 1] = code[codeIndex++];
   }
 
-  console.log("input length:" + input.length);
-  console.log("code string length:" + code.length);
-  console.log("grid length:" + length);
-  console.log("side length:" + sidelength);
-  console.log("space:" + space);
-  console.log("code:" + outString);
+  //console.log("input length:" + input.length);
+  //console.log("code string length:" + code.length);
+  //console.log("grid length:" + length);
+  //console.log("side length:" + sidelength);
+  //console.log("space:" + space);
+  //console.log("code:" + outString);
 
   let output="";
   outString.forEach((char)=>{output+=char})
