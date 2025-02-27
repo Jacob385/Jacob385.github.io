@@ -40,10 +40,13 @@
       </div>
      
       <div>
-        <input name="mode_selector" type="radio" id="CodePacker" value="2">
-        <label for="CodePacker">CodePacker (Not Ready)</label>
+        <input name="mode_selector" type="radio" id="lineToHexCodePacker" value="2">
+        <label for="CodePacker">Straight Line to Hexagnal CodePacker</label>
       </div>
-     
+      <div>
+        <input name="mode_selector" type="radio" id="hexToLineCodePacker" value="3">
+        <label for="CodePacker">Hexagnal to Straight Line CodePacker</label>
+      </div>
     </fieldset>
 
 
@@ -75,25 +78,24 @@
 
     function convert() {
       let mode = document.querySelector('input[name="mode_selector"]:checked').value
-
-      if (mode === "1") StringPacker()
-      else if (mode === "2") CodePacker()
+      let code = document.getElementById("inBox").value
+      
+      if (mode === "1"){
+        document.getElementById("outBox").value = pack(code)
+      }
+      else if (mode === "2"){
+        document.getElementById("outBox").value =lineToHex(code)
+        alert("This option is not ready yet.")
+      }
+      else if (mode === "3"){
+        document.getElementById("outBox").value =hexToLine(code)
+        alert("This option is not ready yet.") 
+      }
      
       else document.getElementById("outBox").value = "Mode not Found"
     }
 
-    function StringPacker(){
-      
-      let code = document.getElementById("inBox").value
-        document.getElementById("outBox").value = pack(code)
-
-    }
     
-    function CodePacker(){
-        document.getElementById("outBox").value = document.getElementById("inBox").value
-        alert("This option is not ready yet.") 
-    }
-
     function openHexagony(){
 
       let code = document.getElementById("outBox").value;
