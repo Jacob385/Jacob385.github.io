@@ -45,7 +45,10 @@ function pack(codeInput) {
   }
   code += "@";
   console.log(code);
+  return lineToHex(code);
+}
 
+function lineToHex(code){
   // Calculate grid size
   let sidelength = 1;
   let length = 1;
@@ -178,4 +181,8 @@ function pack(codeInput) {
   outString.forEach((char)=>{output+=char})
   return output
 
+}
+
+function hexToLine(code){//TODO
+  return ""
 }
