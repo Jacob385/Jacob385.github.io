@@ -1,24 +1,68 @@
 //const fs = require('fs');
+class Grid {
+  constructor(code) {
+    this.sidelength = 1; // length of one side
+    this.length = 1; //length the whole grid of this size
+    this.space = 1; //space left for the program after drection pieces
+    this.gridSizeReserver = 0; //minimum index needed to be occupied to maintain size
+
+    let x;
+    for (x = 1; this.space < code.length; x++) {
+      // Calculate grid size
+      //console.log(`x:${x} sidelength:${this.sidelength} length:${this.length} space:${this.space} gridSizeReserver:${this.gridSizeReserver}`);
+      this.gridSizeReserver = this.length;
+      this.space = 3 * x * x - x + 5;
+      this.length = 3 * x * (x + 1) + 1;
+      this.sidelength++;
+    }
+    console.log(
+      `x:${x} sidelength:${this.sidelength} length:${this.length} space:${this.space} gridSizeReserver:${this.gridSizeReserver}`
+    );
+  }
+}
+
+class GridFull {
+  constructor(code) {
+    this.sidelength = 1; // length of one side
+    this.length = 1; //length the whole grid of this size
+    this.space = 1; //space left for the program after drection pieces
+    this.gridSizeReserver = 0; //minimum index needed to be occupied to maintain size
+
+    let x;
+    for (x = 1; this.length < code.length; x++) {
+      // Calculate grid size
+      //console.log(`x:${x} sidelength:${this.sidelength} length:${this.length} space:${this.space} gridSizeReserver:${this.gridSizeReserver}`);
+      this.gridSizeReserver = this.length;
+      this.space = 3 * x * x - x + 5;
+      this.length = 3 * x * (x + 1) + 1;
+      this.sidelength++;
+    }
+    console.log(
+      `x:${x} sidelength:${this.sidelength} length:${this.length} space:${this.space} gridSizeReserver:${this.gridSizeReserver}`
+    );
+  }
+}
 
 function pack(codeInput) {
   let input = codeInput.trim();
-  
-
 
   // Convert input into a straight line of hexagony code
   let code = "";
-  const inputArray = input.split('');
-  const KEYCHARS = " \t\n0123456789()+-*:%~,.?;!$_|/\\<>[]#{}\"\'=^&`@";
+  const inputArray = input.split("");
+  const KEYCHARS = " \t\n0123456789()+-*:%~,.?;!$_|/\\<>[]#{}\"'=^&`@";
 
   for (let x = 0; x < inputArray.length; x++) {
     let count = 1;
-    while (x + count < inputArray.length && inputArray[x] === inputArray[x + count]) {
+    while (
+      x + count < inputArray.length &&
+      inputArray[x] === inputArray[x + count]
+    ) {
       count++;
     }
 
     let charToPrint = inputArray[x];
     const tempString = charToPrint;
-    const bytes =  new TextEncoder().encode(tempString);
+    const bytes = new TextEncoder().encode(tempString);
     //Buffer.from(tempString, 'utf8');
 
     if (bytes.length > 1) {
@@ -31,11 +75,17 @@ function pack(codeInput) {
       }
 
       if (x > 0) {
-        if (inputArray[x].charCodeAt(0) === inputArray[x - 1].charCodeAt(0) + 1) {
-          charToPrint = ')';
+        if (
+          inputArray[x].charCodeAt(0) ===
+          inputArray[x - 1].charCodeAt(0) + 1
+        ) {
+          charToPrint = ")";
         }
-        if (inputArray[x].charCodeAt(0) === inputArray[x - 1].charCodeAt(0) - 1) {
-          charToPrint = '(';
+        if (
+          inputArray[x].charCodeAt(0) ===
+          inputArray[x - 1].charCodeAt(0) - 1
+        ) {
+          charToPrint = "(";
         }
       }
 
@@ -48,141 +98,142 @@ function pack(codeInput) {
   return lineToHex(code);
 }
 
-function lineToHex(code){
-  // Calculate grid size
-  let sidelength = 1;
-  let length = 1;
-  let space = 1;
-  let gridSizeReserver = 0;
-  let x;
-
-  for (x = 1; space < code.length; x++) {
-    console.log(`x:${x} sidelength:${sidelength} length:${length} space:${space} gridSizeReserver:${gridSizeReserver}`);
-    gridSizeReserver = length;
-    space = 3 * x * x - x + 5;
-    length = 3 * x * (x + 1) + 1;
-    sidelength++;
-  }
-
-  console.log(`x:${x} sidelength:${sidelength} length:${length} space:${space} gridSizeReserver:${gridSizeReserver}`);
+function lineToHex(code) {
+  let grid = new Grid(code);
 
   // Create and fill the grid
-  const outString = new Array(length).fill('E');
-  outString[gridSizeReserver] = 'G';
+  const outString = new Array(grid.length).fill("E");
+  outString[grid.gridSizeReserver] = "G";
 
-  console.log("/////////////");
-  console.log(outString.join(''));
+  console.log(outString.join(""));
 
   // Add zigzag commands to output
   let index = 1;
   let i;
-  for (i = sidelength; i < sidelength * 2 - 2; i++) {
+  for (i = grid.sidelength; i < grid.sidelength * 2 - 2; i++) {
     index += i;
     if (i % 2 === 0) {
-      outString[index - 1] = '>';
-      outString[index + i - 1] = '/';
+      outString[index - 1] = ">";
+      outString[index + i - 1] = "/";
     } else {
-      outString[index - 1] = '\\';
-      outString[index + i - 1] = '<';
+      outString[index - 1] = "\\";
+      outString[index + i - 1] = "<";
     }
   }
   index += i;
   const middleRowIndex = index - 1;
-  outString[index + i - 1] = '/';
 
-  console.log("I: " + i);
-  for (i++; i > sidelength; i--) {
+  outString[index + i - 1] = "/";
+
+  for (i++; i > grid.sidelength; i--) {
     index += i;
-    if ((sidelength + i) % 2 === 0) {
-      outString[index - 1] = '/';
-      outString[index + i - 3] = '<';
+    if ((grid.sidelength + i) % 2 === 0) {
+      outString[index - 1] = "/";
+      outString[index + i - 3] = "<";
     } else {
-      outString[index - 1] = '>';
-      outString[index + i - 3] = '\\';
+      outString[index - 1] = ">";
+      outString[index + i - 3] = "\\";
     }
   }
 
-  console.log(outString.join(''));
+  console.log(outString.join(""));
+  let indexArray = getCodeIndexes(grid);
 
-  // Insert string to grid
-  let codeIndex = 0;
-  for (index = 0; index < sidelength; index++) {
-    outString[index] = code[codeIndex++];
+  for (let x = 0; x < grid.length; x++) {
+    if (indexArray[x] >= 0 && code.charAt(indexArray[x]) != "") {
+      outString[x] = code.charAt(indexArray[x]);
+    }
   }
+  console.log(outString.join(""));
+
+  return outString.join("");
+}
+
+function hexToLine(code) {
+  let grid = new GridFull(code);
+  let indexArray = getCodeIndexes(grid);
+
+  out = "";
+  for (let x = 0; x < grid.length; x++) {
+    if (indexArray.indexOf(x) >= 0) {
+      out += code.charAt(indexArray.indexOf(x));
+    }
+  }
+  return out;
+}
+
+function getCodeIndexes(grid) {
+  let codeIndex = 0;
+  let index = 0;
+  const codeIndexes = new Array(grid.length).fill(-1);
+
+  for (; index < grid.sidelength; index++) {
+    codeIndexes[index] = codeIndex++;
+  }
+
+  let middleRowIndex =
+    ((grid.sidelength - 1) * (3 * (grid.sidelength - 1) + 1)) / 2;
   index = middleRowIndex;
-  outString[index++] = code[codeIndex++];
+
+  codeIndexes[index++] = codeIndex++;
 
   let direction = 1; // 1=right, -1=left
 
-  for (x = 0; x < sidelength - 1; x++) {
-    for (let j = 0; j < sidelength * 2 - 3 - x; j++) {
-      if (codeIndex < code.length && index > sidelength) {
-        outString[index] = code[codeIndex++];
+  for (x = 0; x < grid.sidelength - 1; x++) {
+    for (let j = 0; j < grid.sidelength * 2 - 3 - x; j++) {
+      if (codeIndex < grid.length && index > grid.sidelength) {
+        codeIndexes[index] = codeIndex++;
       }
+
       index += direction;
     }
+
     if (direction === 1) {
-      index -= sidelength * 2 - x;
+      index -= grid.sidelength * 2 - x;
     } else {
-      index -= sidelength * 2 - 3 - x;
+      index -= grid.sidelength * 2 - 3 - x;
     }
     direction *= -1;
   }
 
   if (direction === 1) {
-    index += sidelength * 2 - x - 2;
+    index += grid.sidelength * 2 - x - 2;
   } else {
-    index += sidelength * 2 - x + 1;
+    index += grid.sidelength * 2 - x + 1;
   }
   direction *= -1;
 
-  console.log(outString.join(''));
-
-  if (codeIndex < code.length) {
-    outString[index] = code[codeIndex++];
+  if (codeIndex < grid.length) {
+    codeIndexes[index] = codeIndex++;
   }
 
   if (direction === 1) {
-    index = middleRowIndex + sidelength * 2 - 1;
+    index = middleRowIndex + grid.sidelength * 2 - 1;
   } else {
-    index = middleRowIndex + sidelength * 4 - 4;
+    index = middleRowIndex + grid.sidelength * 4 - 4;
   }
-  if (codeIndex < code.length) {
-    outString[index] = code[codeIndex++];
+  if (codeIndex < grid.length) {
+    codeIndexes[index] = codeIndex++;
   }
   index += direction;
 
-  for (x = 1; x < sidelength; x++) {
-    for (let j = 0; j < sidelength * 2 - 3 - x; j++) {
-      if (codeIndex < code.length && index < outString.length) {
-        outString[index] = code[codeIndex++];
+  for (x = 1; x < grid.sidelength; x++) {
+    for (let j = 0; j < grid.sidelength * 2 - 3 - x; j++) {
+      if (codeIndex < grid.length && index < grid.length) {
+        codeIndexes[index] = codeIndex++;
       }
       index += direction;
     }
     if (direction === 1) {
-      index += sidelength * 2 - 3 - x;
+      index += grid.sidelength * 2 - 3 - x;
     } else {
-      index += sidelength * 2 - x;
+      index += grid.sidelength * 2 - x;
     }
     direction *= -1;
   }
-  if (codeIndex < code.length) {
-    outString[length - 1] = code[codeIndex++];
-  }
 
-  //console.log("input length:" + input.length);
-  //console.log("code string length:" + code.length);
-  //console.log("grid length:" + length);
-  //console.log("side length:" + sidelength);
-  //console.log("space:" + space);
-  //console.log("code:" + outString);
+  codeIndexes[grid.length - 1] = codeIndex++;
 
-  let output="";
-  outString.forEach((char)=>{output+=char})
-  return output
-
-}
-
-function hexToLine(code){//TODO
-  return ""
+  console.log(codeIndexes.join(","));
+  return codeIndexes;
 }
