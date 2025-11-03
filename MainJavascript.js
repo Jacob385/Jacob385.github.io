@@ -27,13 +27,13 @@ function goToHexagonyPacker(){window.location.href ="https://jacob385.github.io/
 function isInteger( str ) {return /^-?\d+$/.test( str );}
 
 function copyText(ElementId) {
-    // Get the text field
-    var copyText = document.getElementById(ElementId);
-  
-    // Select the text field
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); // For mobile devices
-  
-    // Copy the text inside the text field
-    navigator.clipboard.writeText(copyText.value);
-  }
+  // Get the text field
+  var copyText = document.getElementById(ElementId);
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+  // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+}

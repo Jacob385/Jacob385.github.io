@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="../MainStyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="../MainJavascript.js" type="text/javascript"></script>
+  </head>
+<body>
+  <!--<button class="button homeButton" onclick="goToHome()"><i class="fa fa-home"></i> Home</button>-->
+  
+  <div class="center">
+   <h1>Treasure Card Trade Calculator</h1>
+   <p></p>
+   
+   <p>Fill out the fields and hit submit!</p></p>
+    <fieldset>
+      <label for="p1start">Player 1's TC count :</label>
+      <input type="number" id="p1start" name="quantity" min="0" max="1050"><br>
+
+      <label for="p1start">Player 2's TC count :</label>
+      <input type="number" id="p2start" name="quantity" min="0" max="1050"><br>
+
+      <label for="p1trade">Player 1's number of offered TC's :</label>
+      <input type="number" id="p1trade" name="quantity" min="0" max="999"><br>
+
+      <label for="p2trade">Player 2's number of offered TC's :</label>
+      <input type="number" id="p2trade" name="quantity" min="0" max="999"><br>
+      </fieldset>
+   <label for="outBox">Output:</label><br>
+   <textarea class="textbox center" id="outBox"  readonly width="100%"></textarea><br><br>
+    
+   <button class="button" onclick="calculate()">Submit</button>
+  </div>
+  
+  <script>
+
+    function calculate  (){
+      let i1 = Number(document.getElementById("p1start").value);
+      let i2 = Number(document.getElementById("p2start").value);
+      let t1 = Number(document.getElementById("p1trade").value);
+      let t2 = Number(document.getElementById("p2trade").value);
+      let max = Number(999);
+
+      let p1Result = i1 + t2 - t1;
+      let p2Result = i2 + t1 - t2;
+      
+      let out = "P1: " + p1Result + "/999   Space left: " + (max - p1Result) + "\nP2: " + p2Result + "/999   Space left: " + (max - p2Result)
+      document.getElementById("outBox").value=out
+    }
+  </script>
+ 
+  
+</body>
+</html>

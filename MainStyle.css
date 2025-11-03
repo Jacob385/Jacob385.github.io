@@ -89,3 +89,13 @@ h1 {
   background-color: #ba0600;
   color: white;
 }
+
+.buttonGold {
+  background-color: white; 
+  color: black; 
+  border: 2px solid gold;
+} 
+.buttonGold:hover {
+  background-color: gold;
+  color: white;
+}

@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="../MainStyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="../MainJavascript.js" type="text/javascript"></script>
+  </head>
+<body>
+    <div class="center">
+        <h1>Treasure Card Trade Calculator</h1>
+        <p></p>
+
+        <p>Fill out the fields and hit submit!</p></p>
+        
+        <label for="startTime">Enter starting time :</label>
+        <input type="time" id="startTime" name="quantity" min="0" max="1050"><br>
+
+        <label for="endTime">Enter ending time :</label>
+        <input type="time" id="endTime" name="quantity" min="0" max="1050"><br>
+        
+        <textarea class="textbox center" id="outBox"  readonly width="100%"></textarea><br><br>
+
+        <button class="button" onclick="setStartCurrent()">Use current time</button>
+
+        <button class="button" onclick="calculate()">Submit</button>
+
+    </div>
+</body>
+
+<script>
+    window.onload = setStartCurrent;
+    
+    function setStartCurrent(){
+        let now = new Date();
+        let hour = now.getHours();
+        if(hour < 10){
+            hour = "0" + hour;
+        }
+        let min = now.getMinutes();
+        if(min < 10){
+            min = "0" + min;
+        }
+        let timeString = now.toLocaleTimeString()
+        document.getElementById("startTime").value=hour+":"+min;
+    }
+
+    function calculate(){
+        let start = document.getElementById("startTime").value;
+        let startTime = start.split(":");
+        let startHour = startTime[0];
+        let startMin = startTime[1];
+
+        let end = document.getElementById("endTime").value;
+        let endTime = end.split(":");
+        let endHour = endTime[0];
+        let endMin = endTime[1];
+
+        //if(end)
+          
+        let min = (endHour - startHour) * 60 + (endMin - startMin)
+        let memberEnergy = min / 7.5;
+        let nonmenberEnergy = min / 10;
+
+        console.log(       
+            "Start" + start +
+            "\nStart hour" + startHour +
+            "\nStart min" + startMin +
+            "\n\nSnd" + end +
+            "\nEnd hour" + endHour +
+            "\nEnd min"+endMin +
+            "\n\nmin" + min);
+
+        document.getElementById("outBox").value =
+            "Menber: " + memberEnergy +
+            "\nNon-Member: " + nonmenberEnergy;
+
+//start -> end how much
+//x amount how long
+//end -> start  save up starting at
+    }
+</script>
