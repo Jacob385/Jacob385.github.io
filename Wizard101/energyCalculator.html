@@ -6,20 +6,30 @@
   </head>
 <body>
     <div class="center">
-        <h1>Treasure Card Trade Calculator</h1>
+    
+        <h1>Energy Calculator</h1>
         <p></p>
+        <fieldset id="mode_selector">
+            <legend>Mode</legend>
+            <div>
+                <input name="mode_selector" type="radio" id="StartEnd" value="1" checked="true" onclick="setUpStartEnd()">
+                <label for="hardCodeString">Start End</label>
+            </div>
 
-        <p>Fill out the fields and hit submit!</p></p>
-        
-        <label for="startTime">Enter starting time :</label>
-        <input type="time" id="startTime" name="quantity" min="0" max="1050"><br>
+            <div>
+                <input name="mode_selector" type="radio" id="Until" value="2" onclick="setUpUnTil()">
+                <label for="Until">to reatch x amount</label>
+            </div>
 
-        <label for="endTime">Enter ending time :</label>
-        <input type="time" id="endTime" name="quantity" min="0" max="1050"><br>
-        
+            <div>
+                <input name="mode_selector" type="radio" id="EndStart" value="3" onclick="setUpEndStart()">
+                <label for="EndStart">Start saving by to reatch n at</label>
+            </div>
+        </fieldset>
+        <br>
+         
         <textarea class="textbox center" id="outBox"  readonly width="100%"></textarea><br><br>
 
-        <button class="button" onclick="setStartCurrent()">Use current time</button>
 
         <button class="button" onclick="calculate()">Submit</button>
 
@@ -27,23 +37,227 @@
 </body>
 
 <script>
-    window.onload = setStartCurrent;
-    
-    function setStartCurrent(){
-        let now = new Date();
-        let hour = now.getHours();
+    window.onload = init;
+    let startEndInputFieldset;
+    let UntilInputFeildset;
+    let EndStartFeildset;
+    let InputFieldsetId = "inputFieldset";
+    function init(){
+        makeStartEndInput();
+        makeUntilInput();
+        makeEndStart();
+        setUpStartEnd();
+        setStartCurrent();
+    }
+
+    function makeStartEndInput(){
+        startEndInputFieldset = document.createElement("fieldset");
+        startEndInputFieldset.id = InputFieldsetId;
+        //box label
+        let element = document.createElement("legend");
+        element.innerHTML = "Fill out the fields and hit submit!";
+        startEndInputFieldset.appendChild(element);
+        //start time lable
+        element = document.createElement("label");
+        element.for = "startTime";
+        element.innerHTML = "Enter starting time :";
+        startEndInputFieldset.appendChild(element);
+        //start time input
+        element = document.createElement("input");
+        element.type = "time";
+        element.id = "startTime";
+        element.name = "quantity";
+        element.min = "0";
+        element.max = "1050";
+        startEndInputFieldset.appendChild(element);
+        //set time to current btn
+        element = document.createElement("button");
+        element.classList = ["button"];
+        element.style = "  font-size: 12px;  padding: 6px 12px;  margin: 0px 2px;";
+        element.onclick = setStartCurrent;
+        element.innerHTML = "Use current time";
+        startEndInputFieldset.appendChild(element);
+        //newline
+        startEndInputFieldset.appendChild(document.createElement("br"));
+        //end time lable
+        element = document.createElement("label");
+        element.for = "endTime";
+        element.innerHTML = "Enter ending time :";
+        startEndInputFieldset.appendChild(element);
+        //end time input 
+        element = document.createElement("input");
+        element.type = "time";
+        element.id = "endTime";
+        element.name = "quantity";
+        element.min = "0";
+        element.max = "1050";
+        element.value = getDateToStringMilitary(roundUp(addMinutes(new Date(), 30)));
+
+        startEndInputFieldset.appendChild(element);
+
+    }
+
+    function makeUntilInput(){
+        UntilInputFeildset = document.createElement("fieldset");
+        UntilInputFeildset.id = InputFieldsetId;
+
+        //box label
+        let element = document.createElement("legend");
+        element.innerHTML = "Fill out the fields and hit submit!";
+        UntilInputFeildset.appendChild(element);
+        //until lable
+        element = document.createElement("label");
+        element.for = "energy";
+        element.innerHTML = "Enter energy amount :";
+        UntilInputFeildset.appendChild(element);
+        //until input
+        element = document.createElement("input");
+        element.type = "number";
+        element.id = "energy";
+        element.name = "quantity";
+        element.min = "0";
+        element.max = "500";
+        element.step = "1";
+        element.value = "130";
+        UntilInputFeildset.appendChild(element);
+    }
+
+    function makeEndStart(){
+        EndStartFeildset = document.createElement("fieldset");
+        EndStartFeildset.id = InputFieldsetId;
+
+        //box label
+        let element = document.createElement("legend");
+        element.innerHTML = "Fill out the fields and hit submit!";
+        EndStartFeildset.appendChild(element);
+        //until lable
+        element = document.createElement("label");
+        element.for = "energy";
+        element.innerHTML = "Enter energy amount :";
+        EndStartFeildset.appendChild(element);
+        //until input
+        element = document.createElement("input");
+        element.type = "number";
+        element.id = "energy";
+        element.name = "quantity";
+        element.min = "0";
+        element.max = "500";
+        element.step = "1";
+        element.value = "130";
+        EndStartFeildset.appendChild(element);
+        //end time lable
+        element = document.createElement("label");
+        element.for = "endTime";
+        element.innerHTML = "Enter ending time :";
+        EndStartFeildset.appendChild(element);
+        //end time input 
+        element = document.createElement("input");
+        element.type = "time";
+        element.id = "endTime";
+        element.name = "quantity";
+        element.min = "0";
+        element.max = "1050";
+        element.value = getDateToStringMilitary(roundUp(addMinutes(new Date(), 30)));
+
+        EndStartFeildset.appendChild(element);
+    }
+
+    function setStartCurrent(){  
+        document.getElementById("startTime").value = getDateToStringMilitary(new Date());
+    }
+
+    function getDateToStringMilitary(date){
+        let myDate = _sanitizeDateString(date);
+        return myDate.hour + ":" + myDate.min;
+    }
+    function getDateToStringStandard(date){
+        let myDate = _sanitizeDateString(date);
+        let m = "AM";
+        if(myDate.hour > 12){
+            myDate.hour = myDate.hour -12;
+            m = "PM"
+        }
+        if(myDate.hour == 0){
+            myDate.hour = 12;
+        }
+        return myDate.hour + ":" + myDate.min + m;
+    }
+    function _sanitizeDateString(date){
+        let hour = date.getHours();
         if(hour < 10){
             hour = "0" + hour;
         }
-        let min = now.getMinutes();
+        let min = date.getMinutes();
         if(min < 10){
             min = "0" + min;
         }
-        let timeString = now.toLocaleTimeString()
-        document.getElementById("startTime").value=hour+":"+min;
+        return {
+            hour: hour,
+            min: min
+        }
+    } 
+
+    function addMinutes(date, minutes) {
+        console.log("VVVVVV");
+
+        console.log(date);
+        console.log(minutes);
+        let temp = new Date(date.getTime() + minutes*60000);
+        console.log(temp);
+        console.log("^^^^^^");
+
+        return temp;
     }
 
+    function minToTimeframeString(min){
+        return Math.floor(min / 60) + " Hours," + (min % 60) + " Minutes";
+    }
+
+    function roundUp(date){
+        if(date.getMinutes() == 0){
+            return date;
+        }else{
+           return addMinutes(date, 60 - date.getMinutes());
+        }
+    }
+
+    function clearOldFieldset(){
+        let oldFieldset = document.getElementById(InputFieldsetId);
+        if(oldFieldset){
+            oldFieldset.remove();
+        }
+    }
+
+    function setUpStartEnd(){
+        clearOldFieldset();
+        document.getElementById("outBox").before(startEndInputFieldset);
+    }
+
+    function setUpUnTil(){
+        clearOldFieldset();
+        document.getElementById("outBox").before(UntilInputFeildset);
+    }
+
+    function setUpEndStart(){
+        clearOldFieldset();
+        document.getElementById("outBox").before(EndStartFeildset);
+    }
+   
+
     function calculate(){
+        let mode = document.querySelector('input[name="mode_selector"]:checked').value
+        if (mode === "1"){
+            startEnd();
+        }
+        else if (mode === "2"){
+            unTil();
+        }
+        else if (mode === "3"){
+            endStart();
+        }
+    }
+
+    function startEnd(){
         let start = document.getElementById("startTime").value;
         let startTime = start.split(":");
         let startHour = startTime[0];
@@ -54,27 +268,64 @@
         let endHour = endTime[0];
         let endMin = endTime[1];
 
-        //if(end)
-          
-        let min = (endHour - startHour) * 60 + (endMin - startMin)
+        
+        let min = countMin();
+        if(min < 0){
+            endHour = 24 + parseInt(endHour);
+            min = countMin();
+        } 
+        function countMin(){return (endHour - startHour) * 60 + (endMin - startMin)}
+        
         let memberEnergy = min / 7.5;
         let nonmenberEnergy = min / 10;
 
         console.log(       
-            "Start" + start +
-            "\nStart hour" + startHour +
-            "\nStart min" + startMin +
-            "\n\nSnd" + end +
-            "\nEnd hour" + endHour +
-            "\nEnd min"+endMin +
-            "\n\nmin" + min);
+            "Start " + start +
+            "\nStart hour " + startHour +
+            "\nStart min " + startMin +
+            "\n\nEnd " + end +
+            "\nEnd hour " + endHour +
+            "\nEnd min " + endMin +
+            "\n\nmin " + min);
 
         document.getElementById("outBox").value =
             "Menber: " + memberEnergy +
             "\nNon-Member: " + nonmenberEnergy;
+    }
+    
+    function unTil(){
+        let energy = document.getElementById("energy").value;
+        let menberMin = energy * 7.5;
+        let nonmemberMin = energy * 10;
 
-//start -> end how much
+        let memberHour = Math.floor(menberMin/60);
+        
+        document.getElementById("outBox").value =
+            "Menber: " + minToTimeframeString(menberMin) +
+            "\nNon-Member: " + minToTimeframeString(nonmemberMin);
+    }
+
+    function endStart(){
+        let energy = document.getElementById("energy").value;
+        let dateValue = document.getElementById("endTime").value.split(":");
+     
+        let now = new Date();
+        let endTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), dateValue[0], dateValue[1]);
+
+        let menberMin = energy * 7.5;
+        let nonmemberMin = energy * 10; 
+
+        console.log("//////////////////");
+        console.log(endTime);
+
+        document.getElementById("outBox").value =
+            "Menber: " +  minToTimeframeString(menberMin) + "     " + getDateToStringStandard(addMinutes(endTime, -menberMin)) +
+            "\nNon-Member: " + minToTimeframeString(nonmemberMin) + "     " + getDateToStringStandard(addMinutes(endTime, -nonmemberMin));
+
+
+
+    }
+    //start -> end how much
 //x amount how long
 //end -> start  save up starting at
-    }
 </script>

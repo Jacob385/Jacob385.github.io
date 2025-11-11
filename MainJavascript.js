@@ -22,6 +22,8 @@ function goToJavaPacker(){window.location.href ="https://jacob385.github.io/Tool
 //Go to hexagony Packer page
 function goToHexagonyPacker(){window.location.href ="https://jacob385.github.io/Tools/CodeGolf/HexagonyPacker"}
 
+//Go to Wizard101 tools
+function goWizard101(){window.location.href ="https://jacob385.github.io/Wizard101/Wizard101Main.html"}
 
 //Test is string is an integer
 function isInteger( str ) {return /^-?\d+$/.test( str );}
